@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>BScode · BASIC IDE</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- HEADER -->
+      <header class="header">
+        <div class="logo-area">
+          <div class="logo-mark">BS</div>
+          <div>
+            <div class="logo-text">BScode</div>
+            <div class="logo-sub">BASIC STUDIO</div>
+          </div>
+        </div>
+        <div class="status-badge">
+          <div class="live-dot"></div>
+          <span class="badge-label">INTERPRETER READY</span>
+        </div>
+        <div class="header-right">Built by <strong>Aycodes</strong></div>
+      </header>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <button class="btn btn-primary" id="btn-run">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <polygon points="3,1 13,8 3,15" />
+          </svg>
+          <span>RUN</span>
+        </button>
+        <button class="btn" id="btn-clear">
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <polyline points="3,4 13,4" />
+            <path d="M5,4V2h6v2M6,7v5M10,7v5M2,4l1,10h10l1-10" />
+          </svg>
+          <span>CLEAR</span>
+        </button>
+        <button class="btn" id="btn-new">
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path
+              d="M9,1H3a1,1,0,0,0-1,1V14a1,1,0,0,0,1,1H13a1,1,0,0,0,1-1V6Z"
+            />
+            <polyline points="9,1 9,6 14,6" />
+          </svg>
+          <span>NEW</span>
+        </button>
+        <div class="divider"></div>
+        <div class="ex-wrap" id="ex-wrap">
+          <button class="btn" id="btn-examples">
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M2,4h12M2,8h8M2,12h10" />
+            </svg>
+            <span>EXAMPLES</span>
+            <svg
+              viewBox="0 0 10 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <polyline points="1,1 5,5 9,1" />
+            </svg>
+          </button>
+          <div class="ex-menu" id="ex-menu">
+            <div class="ex-menu-head">📘 Load Template</div>
+            <div class="ex-item" data-example="hello">
+              <div class="ex-item-name">Hello World</div>
+              <div class="ex-item-desc">PRINT output demo</div>
+            </div>
+            <div class="ex-item" data-example="calc">
+              <div class="ex-item-name">Simple Calculator</div>
+              <div class="ex-item-desc">INPUT & arithmetic</div>
+            </div>
+            <div class="ex-item" data-example="loop">
+              <div class="ex-item-name">FOR Loop Counter</div>
+              <div class="ex-item-desc">FOR / NEXT iteration</div>
+            </div>
+            <div class="ex-item" data-example="grade">
+              <div class="ex-item-name">Grade Checker</div>
+              <div class="ex-item-desc">IF / THEN / ELSE</div>
+            </div>
+            <div class="ex-item" data-example="table">
+              <div class="ex-item-name">Multiplication Table</div>
+              <div class="ex-item-desc">Nested loops</div>
+            </div>
+            <div class="ex-item" data-example="interest">
+              <div class="ex-item-name">Simple Interest</div>
+              <div class="ex-item-desc">LET + formula</div>
+            </div>
+            <div class="ex-item" data-example="even">
+              <div class="ex-item-name">Even or Odd</div>
+              <div class="ex-item-desc">MOD operator</div>
+            </div>
+            <div class="ex-item" data-example="goto">
+              <div class="ex-item-name">GOTO Loop</div>
+              <div class="ex-item-desc">Conditional branching</div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <button class="btn" id="btn-ai">
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M8,1a7,7,0,1,1-7,7A7,7,0,0,1,8,1Z" />
+            <path d="M8,5v4l3,1.5" />
+          </svg>
+          <span>AI → BASIC</span>
+        </button>
+        <div class="divider"></div>
+        <button class="btn" id="btn-copy">
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <rect x="4" y="4" width="9" height="11" rx="1" />
+            <path d="M3,12H2a1,1,0,0,1-1-1V2A1,1,0,0,1,2,1h9a1,1,0,0,1,1,1v1" />
+          </svg>
+          <span>COPY OUTPUT</span>
+        </button>
+      </div>
+
+      <!-- WORKSPACE -->
+      <div class="workspace">
+        <!-- EDITOR PANEL -->
+        <div class="editor-pane">
+          <div class="pane-header">
+            <div class="pane-title">✎ EDITOR</div>
+            <div class="pane-info">
+              Lines: <span id="line-count">1</span> &nbsp;| Ln
+              <span id="cur-line">1</span> Col <span id="cur-col">1</span>
+            </div>
+          </div>
+          <div class="editor-wrap">
+            <div class="line-nums" id="line-nums">1</div>
+            <textarea
+              id="editor"
+              spellcheck="false"
+              autocorrect="off"
+              autocapitalize="off"
+              placeholder='10 REM Welcome to BScode&#10;20 PRINT "Hello, BASIC!"&#10;30 END'
+            ></textarea>
+          </div>
+          <div class="run-badge" id="run-badge">
+            <span class="run-badge-dot"></span>RUNNING
+          </div>
+        </div>
+
+        <!-- CONSOLE PANEL -->
+        <div class="console-pane">
+          <div class="console-header">
+            <div class="ctab">🖥️ OUTPUT</div>
+            <div class="console-hint">Ctrl+Enter to Run</div>
+          </div>
+          <div id="console-out"></div>
+          <div class="input-row" id="input-row" style="display: none">
+            <label>⌨️ INPUT:</label>
+            <input
+              type="text"
+              id="runtime-input"
+              placeholder="Type value and press Enter…"
+              autocomplete="off"
+            />
+            <button class="input-submit" id="input-submit">ENTER</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATUS BAR -->
+      <div class="statusbar">
+        <div class="sb-left">
+          <div class="sb-lang">BASIC</div>
+          <span id="sb-msg" class="sb-ok">Ready</span>
+        </div>
+        <div class="sb-right">BScode © Aycodes 2026</div>
+      </div>
+    </div>
+
+    <!-- AI MODAL -->
+    <div class="ai-panel" id="ai-panel">
+      <div class="ai-box">
+        <div class="ai-box-head">
+          <div>
+            <div class="ai-box-title">✨ AI → BASIC Generator</div>
+            <div class="ai-sub">
+              Describe your program, get BASIC code instantly
+            </div>
+          </div>
+          <div class="ai-close" id="ai-close">✕</div>
+        </div>
+        <div class="ai-body">
+          <div class="ai-label">📝 Describe what you want</div>
+          <textarea
+            id="ai-input"
+            placeholder="e.g. Calculate the average of five numbers&#10;e.g. Check if a number is prime using GOTO"
+          ></textarea>
+          <div class="ai-chips-label">⚡ Quick prompts:</div>
+          <div class="ai-chips" id="ai-chips-container">
+            <!-- chips injected via js but static fallback -->
+          </div>
+          <div class="ai-foot">
+            <div class="ai-hint">Code appears in editor then press RUN</div>
+            <button class="btn-ai-go" id="ai-go-btn">Generate ✦</button>
+          </div>
+          <div class="ai-status" id="ai-status"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
